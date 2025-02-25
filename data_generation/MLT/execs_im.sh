@@ -1,4 +1,4 @@
-attr="IM"
+attr="CEL"
 
 for nchars in 8 10
 do

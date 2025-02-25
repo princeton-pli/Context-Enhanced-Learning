@@ -244,7 +244,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--path", help="Path to the raw dataset", type=str, default='')
-    parser.add_argument("--attr", type=str, default="ICLPT", help='ICLPT (For ICL training) or IM (for learning a specific set of phrasebooks)')
+    parser.add_argument("--attr", type=str, default="ICLPT", help='ICLPT (For ICL training) or CEL (for learning a specific set of phrasebooks)')
 
     parser.add_argument("--nchars", type=int, default=10, help='number of characters in the vocabulary (n in the paper)')
     parser.add_argument("--depth", type=int, default=4, help='depth of translations (d in the paper)')
@@ -287,7 +287,7 @@ if __name__ == '__main__':
     pickle.dump(dictionaries_meta, open(os.path.join(ds_path, 'dictionaries_meta.pkl'), 'wb'))
 
 
-    # If we are generating the dataset for ICLPT, we need to split the dataset into train and test by splitting the set of phrasebooks
+    # If we are generating the dataset for ICLPT (first stage of training), we need to split the dataset into train and test by splitting the set of phrasebooks
     if args.attr == 'ICLPT':
         print("Splitting the dataset for ICLPT")
         train_split = dictionaries_meta[:-args.n_eval]
@@ -303,10 +303,10 @@ if __name__ == '__main__':
                         continue
                 pickle.dump(split, open(split_path, 'wb'))
 
-    # If we are generating the dataset for IM, we need to split the dataset into train and test by splitting the set of examples for the same set of phrasebooks    
+    # If we are generating the dataset for CEL (second stage of training), we need to split the dataset into train and test by splitting the set of examples for the same set of phrasebooks    
     else:
-        assert args.attr == 'IM'
-        print("Splitting the dataset for IM")
+        assert args.attr == 'CEL'
+        print("Splitting the dataset for CEL")
         n_samples = len(dictionaries_meta[0][1])
         train_split = [[dictionaries_meta[0][0], dictionaries_meta[0][1][:-args.n_eval]]]
         test_split = [[dictionaries_meta[0][0], dictionaries_meta[0][1][-args.n_eval:]]]
