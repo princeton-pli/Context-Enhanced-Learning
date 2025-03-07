@@ -1,0 +1,16 @@
+output
+scripts/wandb
+*.pyc
+*.out
+wandb/
+*.pt
+*_ap*.sh
+*.pkl
+
+*.json
+events*
+checkpoint-*
+*_pretrain.sh
+*.ipynb_checkpoints
+jupyter.log
+jupyter.sh 
